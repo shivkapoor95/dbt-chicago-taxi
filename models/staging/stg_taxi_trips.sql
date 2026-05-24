@@ -1,20 +1,29 @@
-SELECT unique_key,
-taxi_id,
-trip_start_timestamp,
-trip_end_timestamp,
-trip_seconds,
-trip_miles,
-fare,
-tips,
-tolls,
-extras,
-trip_total,
-payment_type,
-company,
-pickup_community_area,
-dropoff_community_area,
-pickup_latitude,
-pickup_longitude,
-dropoff_latitude,
-dropoff_longitude
-FROM {{ source('chicago_taxi', 'taxi_trips') }}
+with source as (
+    SELECT  unique_key,
+    taxi_id,
+    trip_start_timestamp,
+    trip_end_timestamp,
+    trip_seconds,
+    trip_miles,
+    fare,
+    tips,
+    tolls,
+    extras,
+    trip_total,
+    payment_type,
+    company,
+    pickup_community_area,
+    dropoff_community_area,
+    pickup_latitude,
+    pickup_longitude,
+    dropoff_latitude,
+    dropoff_longitude
+    FROM {{ source('chicago_taxi', 'taxi_trips') }}
+),
+deduped as (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY unique_key ORDER BY trip_start_timestamp DESC) as ranking
+from source
+)
+SELECT * 
+FROM deduped
+WHERE ranking = 1

@@ -42,7 +42,7 @@ final as (
     dropoff_longitude,
     EXTRACT(hour from trip_start_timestamp) as pickup_time,
     EXTRACT(DAYOFWEEK from trip_start_timestamp) as pickup_day,  
-    trip_total/ NULLIF(trip_miles, 0) as revenue_per_mile,
+    {{ safe_divide('trip_total', 'trip_miles') }} as revenue_per_mile,
     CASE 
     WHEN trip_end_timestamp > trip_start_timestamp 
     THEN TIMESTAMP_DIFF(trip_end_timestamp, trip_start_timestamp, MINUTE)

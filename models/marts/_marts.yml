@@ -1,0 +1,16 @@
+version : 2
+
+models:
+  - name: fct_trips
+    columns:
+      - name: unique_key
+        tests:
+          - unique
+          - not_null
+    
+  - name: dim_payments_type
+    columns:
+      - name: payment_type
+        tests: 
+          - unique
+          - not_null

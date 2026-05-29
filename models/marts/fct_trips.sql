@@ -1,6 +1,14 @@
+ {{ config(
+    materialized='incremental',
+    unique_key='unique_key'
+) }}
+ 
  with source as 
  (SELECT * 
   FROM {{ref('int_trips_enriched')}}
+  {% if is_incremental() %}
+    WHERE trip_start_timestamp > (SELECT MAX(trip_start_timestamp) FROM {{ this }})
+{% endif %}
   ),
 final as (SELECT unique_key,
     taxi_id,

@@ -1,16 +1,20 @@
-version : 2
+version: 2
 
 models:
   - name: fct_trips
+    description: "Fact table containing one row per taxi trip with all measurements and foreign keys"
     columns:
       - name: unique_key
+        description: "Unique identifier for each taxi trip"
         tests:
           - unique
           - not_null
-    
+
   - name: dim_payments_type
+    description: "Dimension table containing one row per distinct payment type"
     columns:
       - name: payment_type
-        tests: 
+        description: "Method of payment used for the trip"
+        tests:
           - unique
           - not_null

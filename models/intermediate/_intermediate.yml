@@ -2,8 +2,18 @@ version: 2
 
 models:
   - name: int_trips_enriched
+    description: "Enriched trip records with derived metrics including duration, revenue per mile and time-based attributes"
     columns:
       - name: unique_key
+        description: "Unique identifier for each taxi trip"
         tests:
           - unique
           - not_null
+      - name: trip_duration
+        description: "Trip duration in minutes. Null when end timestamp is before start timestamp"
+      - name: revenue_per_mile
+        description: "Total trip revenue divided by miles. Null when trip miles is zero"
+      - name: pickup_hour
+        description: "Hour of day the trip started, 0-23"
+      - name: pickup_day
+        description: "Day of week the trip started, 1=Sunday through 7=Saturday"

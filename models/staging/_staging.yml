@@ -2,29 +2,36 @@ version: 2
 
 models:
   - name: stg_taxi_trips
+    description: "Cleaned and deduplicated taxi trip records from the Chicago public dataset"
     columns:
       - name: unique_key
+        description: "Unique identifier for each taxi trip"
         tests:
           - unique:
               config:
                 severity: warn
           - not_null
       - name: taxi_id
+        description: "Anonymised identifier for the taxi vehicle"
         tests:
           - not_null
       - name: trip_start_timestamp
+        description: "Timestamp when the trip started"
         tests:
           - not_null
       - name: trip_end_timestamp
+        description: "Timestamp when the trip ended"
         tests:
           - not_null:
               config:
                 severity: warn
       - name: trip_total
+        description: "Total amount charged for the trip including fare, tips and extras"
         tests:
           - not_null:
               config:
                 severity: warn
       - name: payment_type
+        description: "Method of payment used for the trip"
         tests:
           - not_null

@@ -4,5 +4,11 @@ sources:
   - name: chicago_taxi
     database: bigquery-public-data
     schema: chicago_taxi_trips
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 48, period: hour}
     tables:
       - name: taxi_trips
+        description: "Raw taxi trip records from the City of Chicago"
+        config:
+          loaded_at_field: trip_start_timestamp

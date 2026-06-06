@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: chicago_taxi
+    description: "Chicago taxi trip data provided by the City of Chicago, updated daily"
     database: bigquery-public-data
     schema: chicago_taxi_trips
     freshness:

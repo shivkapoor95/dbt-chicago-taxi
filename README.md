@@ -1,15 +1,27 @@
-Welcome to your new dbt project!
+# Chicago Taxi — dbt Analytics Project
 
-### Using the starter project
+Analytics engineering project built on 211 million real taxi trip 
+records from the City of Chicago, using dbt Core and BigQuery.
 
-Try running the following commands:
-- dbt run
-- dbt test
+## What it does
 
+Transforms raw public taxi data into clean, tested fact and dimension 
+tables ready for analysis — following the staging → intermediate → mart 
+pattern used in production analytics engineering teams.
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+## What I built
+
+- **Staging model** — deduplicates ~30 million duplicate source records 
+using ROW_NUMBER(), producing a trusted foundation for downstream models
+- **Intermediate model** — derives trip duration, revenue per mile, and 
+time-based attributes using a custom `safe_divide` macro to handle 
+division by zero
+- **Fact table** — incremental model using BigQuery MERGE, avoiding full 
+scans of 62GB on every run
+- **Dimension table** — distinct payment types derived from trip data
+- **15 data tests** across all layers with severity configured to 
+distinguish known source gaps from genuine pipeline bugs
+
+## Stack
+
+dbt Core 1.11.8 · BigQuery · Python 3.11
